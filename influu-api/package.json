@@ -37,7 +37,7 @@
     "rxjs": "^7.8.2"
   },
   "scripts": {
-    "build": "DATABASE_URL=postgresql://dummy prisma generate && nest build -p tsconfig.server.json",
+    "build": "prisma generate && nest build -p tsconfig.server.json",
     "start": "prisma migrate deploy && node dist/src/main.js",
     "start:dev": "tsx watch --tsconfig tsconfig.server.json  --env-file=.env src/main.ts",
     "seed": "tsx prisma/seed.ts"
