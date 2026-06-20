@@ -11,6 +11,7 @@
     "skipLibCheck": true,
     "baseUrl": "./",
     "types": ["node"],
+    "outDir": "./dist",
     "paths": {
       "@/*": ["./src/*"]
     }
