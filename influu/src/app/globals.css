@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS VARIABLES ─────────────────────────────────────────── */
+:root {
+  --bg:       #07070F;
+  --bg-side:  #0C0C1A;
+  --bg-card:  #10101E;
+  --bg-card2: #161628;
+  --border:   rgba(255, 255, 255, 0.07);
+  --border-h: rgba(255, 255, 255, 0.12);
+
+  --brand:      #7C3AFF;
+  --brand-light: #9F5FFF;
+  --pink:        #DB2777;
+  --success:     #10D9A0;
+  --warning:     #F59E0B;
+  --danger:      #F45B69;
+
+  --text-1: #F0F0FF;
+  --text-2: #8B8BAA;
+  --text-3: #4A4A66;
+
+  --grad:       linear-gradient(135deg, #7C3AFF, #DB2777);
+  --grad-ok:    linear-gradient(135deg, #10D9A0, #0BA5D3);
+}
+
+/* ── BASE ──────────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--bg);
+  color: var(--text-1);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── SCROLLBAR ─────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 4px; height: 4px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: rgba(255,255,255,0.1); border-radius: 8px; }
+
+/* ── SELECTION ─────────────────────────────────────────────── */
+::selection {
+  background-color: rgba(124, 58, 255, 0.3);
+  color: #fff;
+}
+
+/* ── ANIMATIONS ────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+.animate-fade-up   { animation: fadeUp 0.35s ease forwards; }
+.animate-fade-in   { animation: fadeIn 0.25s ease forwards; }
+.animate-pulse-dot { animation: pulse-dot 2s infinite; }
+
+/* ── UTILITY CLASSES ───────────────────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+}
+
+.grad-text {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hover-lift {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 24px rgba(124, 58, 255, 0.4);
+}
+
+/* ── SIDEBAR ACTIVE STATE ──────────────────────────────────── */
+.nav-item-active {
+  background: rgba(124, 58, 255, 0.15);
+  color: var(--brand-light);
+  border-left: 2px solid var(--brand);
+}
+
+/* ── TABLE ROW HOVER ───────────────────────────────────────── */
+.table-row-hover:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ── INPUT FOCUS ───────────────────────────────────────────── */
+.input-dark:focus {
+  border-color: var(--brand) !important;
+  box-shadow: 0 0 0 3px rgba(124, 58, 255, 0.18) !important;
+  outline: none;
+}
+
+/* ── SKELETON LOADING ──────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.04) 25%,
+    rgba(255,255,255,0.08) 50%,
+    rgba(255,255,255,0.04) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
