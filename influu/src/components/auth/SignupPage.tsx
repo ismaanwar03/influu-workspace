@@ -61,8 +61,11 @@ export default function SignupPage() {
         password: data.password,
         role: data.role,
       })
-      localStorage.setItem('access_token', res.data.data.tokens.accessToken)
-      localStorage.setItem('refresh_token', res.data.data.tokens.refreshToken)
+      const resData = res.data.data as {
+        tokens: { accessToken: string; refreshToken: string }
+      }
+      localStorage.setItem('access_token', resData.tokens.accessToken)
+      localStorage.setItem('refresh_token', resData.tokens.refreshToken)
       toast.success('Account created!')
       router.push(
         data.role === 'brand'
