@@ -261,6 +261,35 @@ export default function LandingPage() {
 /* ───────────────────────── nav ───────────────────────── */
 
 function Nav() {
+  const [user, setUser] = useState<{ name: string; role: string } | null>(null)
+
+  useEffect(() => {
+    const cookies = Object.fromEntries(
+      document.cookie
+        .split('; ')
+        .filter(Boolean)
+        .map((c) => {
+          const [k, ...v] = c.split('=')
+          return [k, v.join('=')]
+        }),
+    )
+    if (cookies.user_name && cookies.user_role) {
+      setUser({ name: cookies.user_name, role: cookies.user_role })
+    }
+  }, [])
+
+  const handleLogout = () => {
+    localStorage.clear()
+    document.cookie =
+      'user_name=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+    document.cookie =
+      'user_role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+    setUser(null)
+  }
+
+  const dashboardLink =
+    user?.role === 'brand' ? ROUTES.brand.dashboard : ROUTES.creator.dashboard
+
   return (
     <nav
       className='sticky top-0 z-50 border-b border-white/7 backdrop-blur-xl'
@@ -295,22 +324,51 @@ function Nav() {
           </a>
         </div>
         <div className='flex items-center gap-2.5'>
-          <Link
-            href={ROUTES.login}
-            className='px-4 py-2 rounded-xl text-sm font-semibold text-text-primary border border-white/7 hover:border-white/15 transition-all'
-          >
-            Sign in
-          </Link>
-          <Link
-            href={ROUTES.signup}
-            className='px-4 py-2 rounded-xl text-sm font-bold text-white transition-all hover:-translate-y-px'
-            style={{
-              background: 'linear-gradient(135deg,#7C3AFF,#DB2777)',
-              boxShadow: '0 4px 20px rgba(124,58,255,0.35)',
-            }}
-          >
-            Get started free
-          </Link>
+          {user ? (
+            <>
+              <Link
+                href={dashboardLink}
+                className='px-4 py-2 rounded-xl text-sm font-semibold text-text-primary border border-white/10 hover:border-white/20 transition-all'
+              >
+                👋 {user.name.split(' ')[0]}
+              </Link>
+              <Link
+                href={dashboardLink}
+                className='px-4 py-2 rounded-xl text-sm font-bold text-white transition-all hover:-translate-y-px'
+                style={{
+                  background: 'linear-gradient(135deg,#7C3AFF,#DB2777)',
+                  boxShadow: '0 4px 20px rgba(124,58,255,0.35)',
+                }}
+              >
+                Dashboard
+              </Link>
+              <button
+                onClick={handleLogout}
+                className='px-4 py-2 rounded-xl text-sm font-semibold text-red-400 border border-red-400/20 hover:border-red-400/40 transition-all'
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href={ROUTES.login}
+                className='px-4 py-2 rounded-xl text-sm font-semibold text-text-primary border border-white/7 hover:border-white/15 transition-all'
+              >
+                Sign in
+              </Link>
+              <Link
+                href={ROUTES.signup}
+                className='px-4 py-2 rounded-xl text-sm font-bold text-white transition-all hover:-translate-y-px'
+                style={{
+                  background: 'linear-gradient(135deg,#7C3AFF,#DB2777)',
+                  boxShadow: '0 4px 20px rgba(124,58,255,0.35)',
+                }}
+              >
+                Get started free
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>

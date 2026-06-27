@@ -3,6 +3,7 @@ import Logo from '@/components/layout/Logo'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import { authApi } from '@/lib/api'
+import { setAuthCookies } from '@/lib/auth'
 import { ROUTES } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { signupSchema, type SignupInput } from '@/lib/validations'
@@ -66,7 +67,7 @@ export default function SignupPage() {
       }
       localStorage.setItem('access_token', resData.tokens.accessToken)
       localStorage.setItem('refresh_token', resData.tokens.refreshToken)
-      toast.success('Account created!')
+      setAuthCookies(data.name, data.role)
       router.push(
         data.role === 'brand'
           ? ROUTES.onboarding.brand

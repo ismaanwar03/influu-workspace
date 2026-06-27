@@ -2,6 +2,7 @@
 import Logo from '@/components/layout/Logo'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
+import { setAuthCookies } from '@/lib/auth'
 import { ROUTES } from '@/lib/constants'
 import { loginSchema, type LoginInput } from '@/lib/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -61,6 +62,7 @@ export default function LoginPage() {
       localStorage.setItem('refresh_token', tokens.refreshToken)
       localStorage.setItem('user_role', user.role)
       localStorage.setItem('user_name', user.name)
+      setAuthCookies(user.name, user.role)
 
       toast.success(`Welcome back, ${user.name.split(' ')[0]}! 👋`)
 
